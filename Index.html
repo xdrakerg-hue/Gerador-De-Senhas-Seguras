@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas Seguras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Gerador de Senhas</h1>
+        <p class="subtitle">Crie senhas seguras e memoráveis em segundos</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('memorable')">Memorável</button>
+            <button class="tab" onclick="switchTab('random')">Aleatória</button>
+        </div>
+
+        <!-- Aba Memorável -->
+        <div id="memorable" class="tab-content active">
+            <div class="password-display empty" id="memPassword">
+                Clique em "Gerar Senha" para começar
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar">
+                    <div class="strength-fill" id="memStrengthFill"></div>
+                </div>
+                <div class="strength-text" id="memStrengthText"></div>
+            </div>
+
+            <div class="option-group">
+                <label>Número de palavras: <span class="slider-value" id="wordCountValue">4</span></label>
+                <div class="slider-container">
+                    <input type="range" id="wordCount" min="3" max="6" value="4" oninput="updateSlider('wordCount', 'wordCountValue')">
+                </div>
+            </div>
+
+            <div class="word-separator">
+                <label>Separador:</label>
+                <div class="separator-options">
+                    <button class="separator-btn active" onclick="setSeparator('-')">Hífen (-)</button>
+                    <button class="separator-btn" onclick="setSeparator('.')">Ponto (.)</button>
+                    <button class="separator-btn" onclick="setSeparator('_')">Underline (_)</button>
+                    <button class="separator-btn" onclick="setSeparator('')">Nenhum</button>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="capitalize" checked>
+                        <label for="capitalize">Primeira letra maiúscula</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="addNumbers" checked>
+                        <label for="addNumbers">Adicionar números</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="addSymbols">
+                        <label for="addSymbols">Adicionar símbolos</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-generate" onclick="generateMemorablePassword()">🎲 Gerar Senha</button>
+                <button class="btn-copy" id="memCopyBtn" onclick="copyPassword('mem')" disabled>📋 Copiar</button>
+            </div>
+        </div>
+
+        <!-- Aba Aleatória -->
+        <div id="random" class="tab-content">
+            <div class="password-display empty" id="randPassword">
+                Clique em "Gerar Senha" para começar
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar">
+                    <div class="strength-fill" id="randStrengthFill"></div>
+                </div>
+                <div class="strength-text" id="randStrengthText"></div>
+            </div>
+
+            <div class="option-group">
+                <label>Comprimento da senha: <span class="slider-value" id="lengthValue">16</span></label>
+                <div class="slider-container">
+                    <input type="range" id="length" min="8" max="32" value="16" oninput="updateSlider('length', 'lengthValue')">
+                </div>
+            </div>
+
+            <div class="option-group">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="uppercase" checked>
+                        <label for="uppercase">Letras maiúsculas (A-Z)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lowercase" checked>
+                        <label for="lowercase">Letras minúsculas (a-z)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="numbers" checked>
+                        <label for="numbers">Números (0-9)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="symbols" checked>
+                        <label for="symbols">Símbolos (!@#$%&*)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-generate" onclick="generateRandomPassword()">🎲 Gerar Senha</button>
+                <button class="btn-copy" id="randCopyBtn" onclick="copyPassword('rand')" disabled>📋 Copiar</button>
+            </div>
+        </div>
+
+        <div class="tips">
+            <h3>💡 Dicas de Segurança</h3>
+            <ul>
+                <li>Use senhas únicas para cada serviço</li>
+                <li>Senhas com 12+ caracteres são mais seguras</li>
+                <li>Nunca compartilhe suas senhas</li>
+                <li>Use um gerenciador de senhas confiável</li>
+                <li>Ative autenticação de dois fatores quando disponível</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="copied-message" id="copiedMessage">
+        ✓ Senha copiada para a área de transferência!
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
