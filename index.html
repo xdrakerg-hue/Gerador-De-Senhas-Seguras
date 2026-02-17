@@ -3,135 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Senhas Seguras</title>
+    <title>SecurePass - Gerador de Senhas Profissional</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="background-pattern"></div>
+    
     <div class="container">
-        <h1>🔐 Gerador de Senhas</h1>
-        <p class="subtitle">Crie senhas seguras e memoráveis em segundos</p>
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                    <path d="M16 9C13.2386 9 11 11.2386 11 14V15H10C9.44772 15 9 15.4477 9 16V22C9 22.5523 9.44772 23 10 23H22C22.5523 23 23 22.5523 23 22V16C23 15.4477 22.5523 15 22 15H21V14C21 11.2386 18.7614 9 16 9ZM16 11C17.6569 11 19 12.3431 19 14V15H13V14C13 12.3431 14.3431 11 16 11ZM16 17C16.5523 17 17 17.4477 17 18C17 18.3788 16.786 18.7079 16.4648 18.8789L17 21H15L15.5352 18.8789C15.214 18.7079 15 18.3788 15 18C15 17.4477 15.4477 17 16 17Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#2563eb"/>
+                            <stop offset="100%" stop-color="#7c3aed"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>SecurePass</span>
+            </div>
+        </header>
 
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab('memorable')">Memorável</button>
-            <button class="tab" onclick="switchTab('random')">Aleatória</button>
-        </div>
+        <div class="main-content">
+            <h1>Gerador de Senhas Seguras</h1>
+            <p class="subtitle">Crie senhas fortes e confiáveis instantaneamente</p>
 
-        <!-- Aba Memorável -->
-        <div id="memorable" class="tab-content active">
-            <div class="password-display empty" id="memPassword">
-                Clique em "Gerar Senha" para começar
+            <!-- Password Display -->
+            <div class="password-section">
+                <div class="password-display" id="passwordDisplay">
+                    <span class="password-text" id="passwordText">Clique em "Gerar" para criar uma senha</span>
+                </div>
+                <div class="password-actions">
+                    <button class="btn-icon" id="copyBtn" onclick="copyPassword()" disabled title="Copiar senha">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                    <button class="btn-icon" onclick="generatePassword()" title="Gerar nova senha">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
+            <!-- Strength Meter -->
             <div class="strength-meter">
                 <div class="strength-bar">
-                    <div class="strength-fill" id="memStrengthFill"></div>
+                    <div class="strength-fill" id="strengthFill"></div>
                 </div>
-                <div class="strength-text" id="memStrengthText"></div>
-            </div>
-
-            <div class="option-group">
-                <label>Número de palavras: <span class="slider-value" id="wordCountValue">4</span></label>
-                <div class="slider-container">
-                    <input type="range" id="wordCount" min="3" max="6" value="4" oninput="updateSlider('wordCount', 'wordCountValue')">
+                <div class="strength-info">
+                    <span class="strength-label" id="strengthLabel">Força da senha</span>
+                    <span class="strength-value" id="strengthValue"></span>
                 </div>
             </div>
 
-            <div class="word-separator">
-                <label>Separador:</label>
-                <div class="separator-options">
-                    <button class="separator-btn active" onclick="setSeparator('-')">Hífen (-)</button>
-                    <button class="separator-btn" onclick="setSeparator('.')">Ponto (.)</button>
-                    <button class="separator-btn" onclick="setSeparator('_')">Underline (_)</button>
-                    <button class="separator-btn" onclick="setSeparator('')">Nenhum</button>
-                </div>
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="memorable" onclick="switchTab('memorable')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    Memorável
+                </button>
+                <button class="tab" data-tab="random" onclick="switchTab('random')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 3 21 3 21 8"></polyline>
+                        <line x1="4" y1="20" x2="21" y2="3"></line>
+                        <polyline points="21 16 21 21 16 21"></polyline>
+                        <line x1="15" y1="15" x2="21" y2="21"></line>
+                        <line x1="4" y1="4" x2="9" y2="9"></line>
+                    </svg>
+                    Aleatória
+                </button>
             </div>
 
-            <div class="option-group">
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
+            <!-- Memorable Tab -->
+            <div id="memorable" class="tab-content active">
+                <div class="options-grid">
+                    <div class="option-card">
+                        <label class="option-label">
+                            <span>Número de palavras</span>
+                            <span class="option-value" id="wordCountValue">3</span>
+                        </label>
+                        <input type="range" id="wordCount" min="2" max="4" value="3" class="slider">
+                    </div>
+
+                    <div class="option-card">
+                        <label class="option-label">Separador</label>
+                        <div class="separator-grid">
+                            <button class="separator-btn active" data-separator="-" onclick="setSeparator('-')">-</button>
+                            <button class="separator-btn" data-separator="." onclick="setSeparator('.')">.</button>
+                            <button class="separator-btn" data-separator="_" onclick="setSeparator('_')">_</button>
+                            <button class="separator-btn" data-separator="" onclick="setSeparator('')">Nenhum</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkbox-list">
+                    <label class="checkbox-label">
                         <input type="checkbox" id="capitalize" checked>
-                        <label for="capitalize">Primeira letra maiúscula</label>
-                    </div>
-                    <div class="checkbox-item">
+                        <span>Primeira letra maiúscula</span>
+                    </label>
+                    <label class="checkbox-label">
                         <input type="checkbox" id="addNumbers" checked>
-                        <label for="addNumbers">Adicionar números</label>
-                    </div>
-                    <div class="checkbox-item">
+                        <span>Adicionar números</span>
+                    </label>
+                    <label class="checkbox-label">
                         <input type="checkbox" id="addSymbols">
-                        <label for="addSymbols">Adicionar símbolos</label>
+                        <span>Adicionar símbolos</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Random Tab -->
+            <div id="random" class="tab-content">
+                <div class="options-grid">
+                    <div class="option-card full-width">
+                        <label class="option-label">
+                            <span>Comprimento</span>
+                            <span class="option-value" id="lengthValue">12</span>
+                        </label>
+                        <input type="range" id="length" min="8" max="24" value="12" class="slider">
                     </div>
                 </div>
-            </div>
 
-            <div class="button-group">
-                <button class="btn-generate" onclick="generateMemorablePassword()">🎲 Gerar Senha</button>
-                <button class="btn-copy" id="memCopyBtn" onclick="copyPassword('mem')" disabled>📋 Copiar</button>
-            </div>
-        </div>
-
-        <!-- Aba Aleatória -->
-        <div id="random" class="tab-content">
-            <div class="password-display empty" id="randPassword">
-                Clique em "Gerar Senha" para começar
-            </div>
-
-            <div class="strength-meter">
-                <div class="strength-bar">
-                    <div class="strength-fill" id="randStrengthFill"></div>
-                </div>
-                <div class="strength-text" id="randStrengthText"></div>
-            </div>
-
-            <div class="option-group">
-                <label>Comprimento da senha: <span class="slider-value" id="lengthValue">16</span></label>
-                <div class="slider-container">
-                    <input type="range" id="length" min="8" max="32" value="16" oninput="updateSlider('length', 'lengthValue')">
-                </div>
-            </div>
-
-            <div class="option-group">
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
+                <div class="checkbox-list">
+                    <label class="checkbox-label">
                         <input type="checkbox" id="uppercase" checked>
-                        <label for="uppercase">Letras maiúsculas (A-Z)</label>
-                    </div>
-                    <div class="checkbox-item">
+                        <span>Letras maiúsculas (A-Z)</span>
+                    </label>
+                    <label class="checkbox-label">
                         <input type="checkbox" id="lowercase" checked>
-                        <label for="lowercase">Letras minúsculas (a-z)</label>
-                    </div>
-                    <div class="checkbox-item">
+                        <span>Letras minúsculas (a-z)</span>
+                    </label>
+                    <label class="checkbox-label">
                         <input type="checkbox" id="numbers" checked>
-                        <label for="numbers">Números (0-9)</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="symbols" checked>
-                        <label for="symbols">Símbolos (!@#$%&*)</label>
-                    </div>
+                        <span>Números (0-9)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="symbols">
+                        <span>Símbolos (!@#$%&*)</span>
+                    </label>
                 </div>
             </div>
 
-            <div class="button-group">
-                <button class="btn-generate" onclick="generateRandomPassword()">🎲 Gerar Senha</button>
-                <button class="btn-copy" id="randCopyBtn" onclick="copyPassword('rand')" disabled>📋 Copiar</button>
-            </div>
+            <!-- Generate Button -->
+            <button class="btn-generate" onclick="generatePassword()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                Gerar Senha Segura
+            </button>
         </div>
 
-        <div class="tips">
-            <h3>💡 Dicas de Segurança</h3>
-            <ul>
-                <li>Use senhas únicas para cada serviço</li>
-                <li>Senhas com 12+ caracteres são mais seguras</li>
-                <li>Nunca compartilhe suas senhas</li>
-                <li>Use um gerenciador de senhas confiável</li>
-                <li>Ative autenticação de dois fatores quando disponível</li>
-            </ul>
-        </div>
+        <footer class="footer">
+            <p>🔒 Suas senhas são geradas localmente e nunca são enviadas para servidores</p>
+        </footer>
     </div>
 
-    <div class="copied-message" id="copiedMessage">
-        ✓ Senha copiada para a área de transferência!
+    <div class="toast" id="toast">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Senha copiada com sucesso!
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
+    
